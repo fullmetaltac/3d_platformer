@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     public float moveSpeed;
     public float jumpForce;
     public float rotateSpeed;
@@ -19,13 +20,16 @@ public class PlayerController : MonoBehaviour
 
     public Animator anim;
 
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         theCam = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         float yStore = moveDirection.y;
@@ -37,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
         if (charController.isGrounded)
         {
+            moveDirection.y = 0f;
+
             if (Input.GetButtonDown("Jump"))
             {
                 moveDirection.y = jumpForce;
